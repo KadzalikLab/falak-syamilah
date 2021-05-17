@@ -16,8 +16,8 @@ public class Main {
         dtk=0;
         boolean masehi=false;
         if (!masehi)thn=-(thn-1); //jika sebelum masehi
-        jamDes=Konversi.dmsKeDesimal(jam,mnt,dtk);
-        double jd = Konversi.masehiKeJd(tgl,bln,thn,jamDes);
+        jamDes= com.falak.Konversi.dmsKeDesimal(jam,mnt,dtk);
+        double jd = com.falak.Konversi.masehiKeJd(tgl,bln,thn,jamDes);
 
         //semisal ingin mendapatkan nila apparent declination sun // deklinasi matahari
         double dek_mat  = Sun.Vsop87.apparentDeclination(jd);
