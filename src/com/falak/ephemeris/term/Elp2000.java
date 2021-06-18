@@ -1,4 +1,4 @@
-package com.falak.term;
+package com.falak.ephemeris.term;
 
 public class Elp2000 {
     /**

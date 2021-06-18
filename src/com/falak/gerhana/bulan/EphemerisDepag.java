@@ -1,17 +1,17 @@
 package com.falak.gerhana.bulan;
 
 import com.falak.Konversi;
-import com.falak.Moon;
-import com.falak.Sun;
+import com.falak.ephemeris.Moon;
+import com.falak.ephemeris.Sun;
 import static java.lang.Math.*;
 
 import java.util.Locale;
 
 public class EphemerisDepag {
     public static void main(String[] args) {
-        double tanggal=15;
-        double bulan=6;
-        int tahun=2011;
+        double tanggal=26;
+        double bulan=5;
+        int tahun=2021;
         double timezone=7;
 
         double jam=0;
@@ -26,9 +26,9 @@ public class EphemerisDepag {
             double jd1= Konversi.masehiKeJd(tanggal,bulan,tahun,i);
             double jd2= Konversi.masehiKeJd(tanggal,bulan,tahun,i+1);
 
-            double fib0= Moon.AstroAlgo.diskIlluminatedFraction(jd0);
-            double fib1= Moon.AstroAlgo.diskIlluminatedFraction(jd1);
-            double fib2= Moon.AstroAlgo.diskIlluminatedFraction(jd2);
+            double fib0= Moon.astroAlgo.diskIlluminatedFraction(jd0);
+            double fib1= Moon.astroAlgo.diskIlluminatedFraction(jd1);
+            double fib2= Moon.astroAlgo.diskIlluminatedFraction(jd2);
             // System.out.println("Jam "+i+" | Fib: "+String.format(Locale.JAPAN,"%.5f",fib1));
             if(fib1>fib0&&fib1>fib2){
                 fibMax=fib1;
@@ -100,8 +100,8 @@ public class EphemerisDepag {
 
         System.out.println("\nKarena nilai beta c "+Konversi.dmsMili(bc)+" Maka "+ kondisi);
 
-        double sdoS1=Sun.AstroAlgo.angularSemiDiameter(jd_jamFibMax);
-        double sdoS2=Sun.AstroAlgo.angularSemiDiameter(jd_jamFibMaxS2);
+        double sdoS1= Sun.astroAlgo.angularSemiDiameter(jd_jamFibMax);
+        double sdoS2= Sun.astroAlgo.angularSemiDiameter(jd_jamFibMaxS2);
         double sdo= sdoS1-(sdoS1-sdoS2)*pecahamJamIstiqbal;
         printDms("sdo"+jam_fibMax,sdoS1);
         printDms("sdo"+(jam_fibMax+1),sdoS2);
@@ -112,8 +112,8 @@ public class EphemerisDepag {
 //        printDms("",);
 
 
-        double hpcS1=Moon.AstroAlgo.equatorialHorizontalParallax(jd_jamFibMax);
-        double hpcS2=Moon.AstroAlgo.equatorialHorizontalParallax(jd_jamFibMaxS2);
+        double hpcS1= Moon.astroAlgo.equatorialHorizontalParallax(jd_jamFibMax);
+        double hpcS2= Moon.astroAlgo.equatorialHorizontalParallax(jd_jamFibMaxS2);
         double hpc= hpcS1-(hpcS1-hpcS2)*pecahamJamIstiqbal;
         double pbk=hpc*0.998340;
 
@@ -125,8 +125,8 @@ public class EphemerisDepag {
         double sdck=asin((0.2725076*sin(hpc)));
         printDms("Sdck",sdck);
 
-        double tgdoS1=Sun.AstroAlgo.trueGeocentricDistance(jd_jamFibMax);
-        double tgdoS2=Sun.AstroAlgo.trueGeocentricDistance(jd_jamFibMaxS2);
+        double tgdoS1= Sun.astroAlgo.trueGeocentricDistance(jd_jamFibMax);
+        double tgdoS2= Sun.astroAlgo.trueGeocentricDistance(jd_jamFibMaxS2);
         double tgdo= tgdoS1-(tgdoS1-tgdoS2)*pecahamJamIstiqbal;
 
         print7digit("Tgdo"+jam_fibMax,tgdoS1);
@@ -181,13 +181,12 @@ public class EphemerisDepag {
         double gmt=7;
         double to;
         double jdToPlus1Menit=jd_jamFibMax+((1/60.0)/24);
-        double alUtkTo = Moon.AstroAlgo.apparentGeocentricLatitude(jdToPlus1Menit);
+        double alUtkTo = Moon.astroAlgo.apparentGeocentricLatitude(jdToPlus1Menit);
         boolean mengecil=abs(alUtkTo)<abs(alb_jamFibS1);
         if (mengecil)to=jam_fibMax+t+Konversi.dmsKeDesimal(0,1,7);
         else to=(jam_fibMax-t)+Konversi.dmsKeDesimal(0,1,7);
         System.out.println(mengecil);
         System.out.println(jam_fibMax);
-        System.out.println(t);
         awal_penumbra=to-t1;
         awal_umbra = to-t2;
         awal_total = to-t3;

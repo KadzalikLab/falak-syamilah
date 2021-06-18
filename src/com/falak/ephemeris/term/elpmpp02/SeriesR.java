@@ -1,4 +1,4 @@
-package com.falak.term.elpmpp02;
+package com.falak.ephemeris.term.elpmpp02;
 
 public class SeriesR {
 

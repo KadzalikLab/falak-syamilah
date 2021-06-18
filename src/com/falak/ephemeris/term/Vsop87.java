@@ -1,4 +1,4 @@
-package com.falak.term;
+package com.falak.ephemeris.term;
 
 /**
  * Term Vsop87 Sun diambil dari folder aplikasi <a href="http://www.icoproject.org/accut.html?l=en">Accurate Times </a> file TermFull.ode

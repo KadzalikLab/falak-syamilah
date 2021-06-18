@@ -1,4 +1,4 @@
-package com.falak;
+package com.falak.ephemeris;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;

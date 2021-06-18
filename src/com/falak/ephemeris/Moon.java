@@ -1,10 +1,10 @@
-package com.falak;
+package com.falak.ephemeris;
 
 
 public class Moon {
 
 
-    public static class AstroAlgo {
+    public static class astroAlgo {
         public static double trueGeocentricLongitude(double jd){
             return  Calculation.astroAlgo(jd)[11];
         }
@@ -54,8 +54,8 @@ public class Moon {
 
         public static double sunGeocentricElongation(double jd){
             double deltaSun,alphaSun,deltaMoon,alphaMoon,psi;
-            deltaSun = Sun.AstroAlgo.apparentDeclination(jd);
-            alphaSun = Sun.AstroAlgo.apparentRightAscension(jd);
+            deltaSun = Sun.astroAlgo.apparentDeclination(jd);
+            alphaSun = Sun.astroAlgo.apparentRightAscension(jd);
             deltaMoon = apparentDeclination(jd);
             alphaMoon = apparentRightAscension(jd);
             psi = Math.toDegrees(Math.acos(Math.sin(Math.toRadians(deltaSun))*Math.sin(Math.toRadians(deltaMoon))+Math.cos(Math.toRadians(deltaSun))*Math.cos(Math.toRadians(deltaMoon))*Math.cos(Math.toRadians(alphaSun-alphaMoon))));
@@ -69,7 +69,7 @@ public class Moon {
 
 
 
-    public static class Elpmpp02{
+    public static class elpmpp02 {
 
         public static double trueGeocentricLongitude(double jd){
             return  Calculation.elpMpp02(jd)[1];
@@ -125,8 +125,8 @@ public class Moon {
             double deltaSun,alphaSun,deltaMoon,alphaMoon,psi;
             deltaSun = Calculation.vsop87(jd)[5];
             alphaSun = Calculation.vsop87(jd)[4];
-            deltaMoon = Calculation.vsop87(jd)[15];
-            alphaMoon = Calculation.vsop87(jd)[14];
+            deltaMoon = apparentDeclination(jd);
+            alphaMoon = apparentRightAscension(jd);
             psi = Math.toDegrees(Math.acos(Math.sin(Math.toRadians(deltaSun))*Math.sin(Math.toRadians(deltaMoon))+Math.cos(Math.toRadians(deltaSun))*Math.cos(Math.toRadians(deltaMoon))*Math.cos(Math.toRadians(alphaSun-alphaMoon))));
             return  psi;
         }
@@ -136,7 +136,7 @@ public class Moon {
 
 
 
-    public static class Elpmpp02Trunc{
+    public static class elpmpp02Trunc {
 
 
         public static double trueGeocentricLongitude(double jd){
@@ -193,8 +193,8 @@ public class Moon {
             double deltaSun,alphaSun,deltaMoon,alphaMoon,psi;
             deltaSun = Calculation.vsop87(jd)[5];
             alphaSun = Calculation.vsop87(jd)[4];
-            deltaMoon = Calculation.vsop87(jd)[15];
-            alphaMoon = Calculation.vsop87(jd)[14];
+            deltaMoon = apparentDeclination(jd);
+            alphaMoon = apparentRightAscension(jd);
             psi = Math.toDegrees(Math.acos(Math.sin(Math.toRadians(deltaSun))*Math.sin(Math.toRadians(deltaMoon))+Math.cos(Math.toRadians(deltaSun))*Math.cos(Math.toRadians(deltaMoon))*Math.cos(Math.toRadians(alphaSun-alphaMoon))));
             return  psi;
         }
@@ -202,7 +202,7 @@ public class Moon {
 
     }
 
-    public static class Elp2000{
+    public static class elp2000 {
 
 
         public static double trueGeocentricLongitude(double jd){
@@ -259,8 +259,8 @@ public class Moon {
             double deltaSun,alphaSun,deltaMoon,alphaMoon,psi;
             deltaSun = Calculation.vsop87(jd)[5];
             alphaSun = Calculation.vsop87(jd)[4];
-            deltaMoon = Calculation.vsop87(jd)[15];
-            alphaMoon = Calculation.vsop87(jd)[14];
+            deltaMoon = apparentDeclination(jd);
+            alphaMoon = apparentRightAscension(jd);
             psi = Math.toDegrees(Math.acos(Math.sin(Math.toRadians(deltaSun))*Math.sin(Math.toRadians(deltaMoon))+Math.cos(Math.toRadians(deltaSun))*Math.cos(Math.toRadians(deltaMoon))*Math.cos(Math.toRadians(alphaSun-alphaMoon))));
             return  psi;
         }

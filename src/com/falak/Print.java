@@ -1,15 +1,19 @@
 package com.falak;
 
-import com.falak.Konversi;
 
 import java.util.Locale;
 
 public class Print {
     static String format = "%-25s%5s%n";
     public static void printDms(String teks, double dms_value){
-        System.out.printf(format,teks,":"+ Konversi.dmsMili(dms_value));
+        System.out.printf(format,teks,": "+ Konversi.dmsMili(dms_value));
 
     }
+    public static void printDms(String teks, double dms_value,int digit){
+        System.out.printf(format,teks,": "+ Konversi.dmsMili(dms_value,digit));
+
+    }
+
     public static void printDms( double dms_value){
         System.out.println(Konversi.dmsMili(dms_value));
 
@@ -17,16 +21,24 @@ public class Print {
 
 
     public  static void printHms(String teks, double hms_value){
-        System.out.printf(format,teks,":"+Konversi.hmsMili(hms_value));
+        System.out.printf(format,teks,": "+Konversi.hmsMili(hms_value));
 
     }
     public  static void printHmssss(String teks, double hms_value){
-        System.out.printf(format,teks,":"+Konversi.hmsMili(hms_value));
+        System.out.printf(format,teks,": "+Konversi.hmsMili(hms_value));
 
     }
 
     public  static void printHms(String teks, double hms_value,String iterator){
-        System.out.printf(format,teks,":"+Konversi.hms(hms_value)+" "+ iterator);
+        System.out.printf(format,teks,": "+Konversi.hms(hms_value)+" "+ iterator);
+
+    }
+    public  static void print(String teks, double value){
+        System.out.printf(format,teks,": "+value);
+
+    }
+    public  static void print(String teks, int value){
+        System.out.printf(format,teks,": "+value);
 
     }
 

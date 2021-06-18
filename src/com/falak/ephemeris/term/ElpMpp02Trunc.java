@@ -1,4 +1,4 @@
-package com.falak.term;
+package com.falak.ephemeris.term;
 
 public class ElpMpp02Trunc {
     public  static  double meanLongitude(double T){

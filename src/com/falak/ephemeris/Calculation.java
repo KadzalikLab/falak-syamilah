@@ -1,7 +1,7 @@
-package com.falak;
+package com.falak.ephemeris;
 
-import com.falak.term.*;
-import com.falak.term.elpmpp02.ElpMpp02;
+import com.falak.ephemeris.term.*;
+import com.falak.ephemeris.term.elpmpp02.ElpMpp02;
 
 public class Calculation {
 
@@ -164,7 +164,7 @@ public class Calculation {
         double theta = (L_sun + 180) % 360;
         double deltaTheta = -0.09033 / 3600;
         double true_longitude_sun = (theta + deltaTheta) % 360; //theta terkoreksi //bujur matahari yang sudah terkoreksi
-
+        if (true_longitude_sun<0)true_longitude_sun+=360;
         double sunEarth_distance = Vsop87.earthRadiusVector(tau);
         double sunEarth_distance_AU = 149598000 * sunEarth_distance; //AU
 
@@ -253,8 +253,8 @@ public class Calculation {
         double deltaBulan_r = Math.toRadians(apparent_Declination_moon);
 
 
-        double deltaM_r = Math.toRadians(Sun.Vsop87.apparentDeclination(jd));
-        double alphaMatahari = (Sun.Vsop87.apparentRightAscension(jd));
+        double deltaM_r = Math.toRadians(Sun.vsop87.apparentDeclination(jd));
+        double alphaMatahari = (Sun.vsop87.apparentRightAscension(jd));
         double jarakBm_M = (vsop87(jd)[11]);//AU
 
 
@@ -323,8 +323,8 @@ public class Calculation {
         double deltaBulan_r = Math.toRadians(apparent_Declination_moon);
 
 
-        double deltaM_r = Math.toRadians(Sun.Vsop87.apparentDeclination(jd));
-        double alphaMatahari = (Sun.Vsop87.apparentRightAscension(jd));
+        double deltaM_r = Math.toRadians(Sun.vsop87.apparentDeclination(jd));
+        double alphaMatahari = (Sun.vsop87.apparentRightAscension(jd));
         double jarakBm_M = (vsop87(jd)[11]);//AU
 
 
@@ -394,8 +394,8 @@ public class Calculation {
         double deltaBulan_r = Math.toRadians(apparent_Declination_moon);
 
 
-        double deltaM_r = Math.toRadians(Sun.Vsop87.apparentDeclination(jd));
-        double alphaMatahari = (Sun.Vsop87.apparentRightAscension(jd));
+        double deltaM_r = Math.toRadians(Sun.vsop87.apparentDeclination(jd));
+        double alphaMatahari = (Sun.vsop87.apparentRightAscension(jd));
         double jarakBm_M = (vsop87(jd)[11]);//AU
 
 

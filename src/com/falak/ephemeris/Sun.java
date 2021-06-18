@@ -1,4 +1,4 @@
-package com.falak;
+package com.falak.ephemeris;
 
 public class Sun {
 
@@ -9,7 +9,7 @@ public class Sun {
      * @see <a href="http://www.agopax.it/Libri_astronomia/pdf/Astronomical%20Algorithms.pdf">Astronomical Algorithms.pdf</a>
      * @since 2021-03-31
      */
-    public static class AstroAlgo {
+    public static class astroAlgo {
 
 
         //nilai sebenarnya Bujur Matahari Koordinat Ekliptika Geosentrik
@@ -81,7 +81,7 @@ public class Sun {
     }
 
 
-    public static class Vsop87 {
+    public static class vsop87 {
 
         public static double trueGeocentricLongitude(double jd) {
             return Calculation.vsop87(jd)[1];
