@@ -386,6 +386,32 @@ public class Konversi {
         int nomor_pasaran = Konversi.jdKeMasehi(jd)[8];
         return Konversi.namahari(nomor_hari) + " " + Konversi.namapasaran(nomor_pasaran) + ", " + tanggal + " " + Konversi.namaBulanMasehi(bulan) + " " + tahun + " | " + Konversi.hmsMili(jam_des);
     }
+    public static String jdTo_DDMMMYYYY(double jd) {
+        int tanggal = Konversi.jdKeMasehi(jd)[1];
+        int bulan = Konversi.jdKeMasehi(jd)[2];
+        int tahun = Konversi.jdKeMasehi(jd)[3];
+        return tanggal + " " + Konversi.namaBulanMasehi(bulan) + " " + tahun;
+    }
+
+    public static String jdTo_hhmmss(double jd) {
+        double jam_des = Konversi.jdPukul(jd);
+        return Konversi.hmsMili(jam_des);
+    }
+
+
+    public static String ddd_ppp(double jd) {
+        int nomor_hari = Konversi.jdKeMasehi(jd)[7];
+        int nomor_pasaran = Konversi.jdKeMasehi(jd)[8];
+        return Konversi.namahari(nomor_hari) + " " + Konversi.namapasaran(nomor_pasaran);
+    }
+
+    public static String DDMMMYYYY_hhmmss(double jd) {
+        int tanggal = Konversi.jdKeMasehi(jd)[1];
+        int bulan = Konversi.jdKeMasehi(jd)[2];
+        int tahun = Konversi.jdKeMasehi(jd)[3];
+        double jam_des = Konversi.jdPukul(jd);
+        return tanggal + " " + Konversi.namaBulanMasehi(bulan) + " " + tahun + " | " + Konversi.hmsMili(jam_des);
+    }
 
     public static String ddd_ppp_DDMMMYYYY(double jd) {
         int tanggal = Konversi.jdKeMasehi(jd)[1];

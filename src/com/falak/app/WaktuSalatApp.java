@@ -104,6 +104,33 @@ public class WaktuSalatApp {
         double terbit = ws1.getTerbit();
 
 
+        System.out.println();
+        Salat th21 = new Salat(21,6,2021,lintang,bujur,zona_waktu,tinggi);
+        th21.setMetodeHisab().makalahKemenag();
+        Salat th31 = new Salat(21,6,2031,lintang,bujur,zona_waktu,tinggi);
+        th31.setMetodeHisab().makalahKemenag();
+        Salat th51 = new Salat(21,6,2051,lintang,bujur,zona_waktu,tinggi);
+        th51.setMetodeHisab().makalahKemenag();
+
+        printHms("Zuhur 21 6 2021",th21.getDzuhur());
+        printHms("Zuhur 21 6 2031",th31.getDzuhur());
+        printHms("Zuhur 21 6 2051",th51.getDzuhur());
+
+
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        double tahunL=2021;
+        for (int i = 0; i<11;i++){
+            Salat th = new Salat(21,6,tahunL,lintang,bujur,zona_waktu,tinggi);
+            th.setMetodeHisab().makalahKemenag();
+            printHms("Zuhur 21 6 "+(int)tahunL,th.getDzuhur());
+            tahunL+=10;
+
+        }
+
+
+
 
 
 

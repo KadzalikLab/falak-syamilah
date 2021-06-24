@@ -67,7 +67,7 @@ public class Vincenty {
         alpha1=atan2(cos(u2)*sin(lambda),cos(u1)*sin(u2)-sin(u1)*cos(u2)*cos(lambda));
         alpha2=atan2(cos(u1)*sin(lambda),-sin(u1)*cos(u2)+cos(u1)*sin(u2)*cos(lambda));
         hasil=180+toDegrees(alpha2);
-        return Mathf.modulo(hasil, 360);
+        return Mathf.moduloModif(hasil, 360);
     }
 
 

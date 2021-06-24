@@ -27,7 +27,7 @@ public class Elipsoid {
         sB=sin(B)*sin(C);
         cB=cos(B)*sin(A)-cos(A)*sin(B)*cos(C);
         Bb=atan2(sB,cB);
-        return Mathf.modulo(360-toDegrees(Bb),360);
+        return Mathf.moduloModif(360-toDegrees(Bb),360);
 
     }
 

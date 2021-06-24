@@ -18,6 +18,10 @@ public class Print {
         System.out.println(Konversi.dmsMili(dms_value));
 
     }
+    public static void printDms( double dms_value,int digit){
+        System.out.println(Konversi.dmsMili(dms_value,digit));
+
+    }
 
 
     public  static void printHms(String teks, double hms_value){
@@ -37,13 +41,26 @@ public class Print {
         System.out.printf(format,teks,": "+value);
 
     }
+     public  static void print(String teks, double value,int digit){
+        System.out.printf(format,teks,": "+String.format(Locale.JAPAN,"%."+digit+"f",value));
+
+    }
+     public  static void print( double value,int digit){
+        System.out.println(String.format(Locale.JAPAN,"%."+digit+"f",value));
+
+    }
+
+    public  static void print( double value){
+        System.out.println(value);
+    }
+
     public  static void print(String teks, int value){
         System.out.printf(format,teks,": "+value);
 
     }
 
     public static void printDigit(String teks, double value,int digit){
-        System.out.printf(format,teks,":"+String.format(Locale.JAPAN,"%."+digit+"f",value));
+        System.out.printf(format,teks,": "+String.format(Locale.JAPAN,"%."+digit+"f",value));
 
     }
     public static String printDigit(double value,int digit){

@@ -2,7 +2,7 @@ package com.falak.ephemeris;
 
 import com.falak.ephemeris.term.*;
 import com.falak.ephemeris.term.elpmpp02.ElpMpp02;
-
+import static com.falak.Mathf.*;
 public class Calculation {
 
     public static double[] astroAlgo(double jd) {
@@ -50,9 +50,8 @@ public class Calculation {
         double koreksibujurB = (L_moon + 3958 * Math.sin(aA1_r) + 1962 * Math.sin(Math.toRadians(mean_longitude_moon) - f_r) + 318 * Math.sin(aA2_r)) / 1000000;
 
         //Koreksi bujur bulan
-        double true_longitude_moon = (mean_longitude_moon + koreksibujurB) % 360; // bujur bulan rata-rata yang sudah di koreksi
-        double apparent_longitude_moon = (true_longitude_moon + deltaPsi) % 360; // bujur bulan yang nampak
-        if (apparent_longitude_moon < 0) apparent_longitude_moon += 360;
+        double true_longitude_moon = mod(mean_longitude_moon + koreksibujurB,360) ; // bujur bulan rata-rata yang sudah di koreksi
+        double apparent_longitude_moon = mod(true_longitude_moon + deltaPsi,360) ; // bujur bulan yang nampak
         double bujurB_nampak_r = Math.toRadians(apparent_longitude_moon);
 
         //Koreksi lintang bulan
@@ -68,9 +67,8 @@ public class Calculation {
         double semiDiameter_moon = 358473400 / (moonEarth_distance * 3600); //Angular Moon SemiDiameter
 
         //apparent right ascension
-        double apparent_RightAscension_moon = (Math.toDegrees(Math.atan2(Math.sin(bujurB_nampak_r) * Math.cos(epsilon_r) - Math.tan(latitude_moon_rad) * Math.sin(epsilon_r), Math.cos(bujurB_nampak_r)))) % 360;
-        if (apparent_RightAscension_moon < 0) apparent_RightAscension_moon = (apparent_RightAscension_moon + 360) % 360;
-
+        double apparent_RightAscension_moon = (Math.toDegrees(Math.atan2(Math.sin(bujurB_nampak_r) * Math.cos(epsilon_r) - Math.tan(latitude_moon_rad) * Math.sin(epsilon_r), Math.cos(bujurB_nampak_r)))) ;
+        apparent_RightAscension_moon=mod(apparent_RightAscension_moon,360);
 
         //declination
         double apparent_Declination_moon = Math.toDegrees(Math.asin(Math.sin(latitude_moon_rad) * Math.cos(epsilon_r) + Math.cos(latitude_moon_rad) * Math.sin(epsilon_r) * Math.sin(bujurB_nampak_r)));
@@ -81,8 +79,7 @@ public class Calculation {
         double L_sun = AstroAlgo.earthHeliocentricLongitude(tau); //hasil penjumlahan koreksi l0+l1+l2 dst
         double theta = (L_sun + 180) % 360;
         double deltaTheta = -0.09033 / 3600;
-        double true_longitude_sun = (theta + deltaTheta) % 360; //theta terkoreksi //bujur matahari yang sudah terkoreksi
-        if (true_longitude_sun<0)true_longitude_sun+=360;
+        double true_longitude_sun = mod(theta + deltaTheta,360); //theta terkoreksi //bujur matahari yang sudah terkoreksi
 
         double sunEarth_distance = AstroAlgo.earthRadiusVector(tau);
         double jarakBm_Mat_AU = 149598000 * sunEarth_distance; //AU
@@ -98,14 +95,13 @@ public class Calculation {
 
 
         double abberration = -20.4898 / (3600 * sunEarth_distance);
-        double apparent_longitude_sun = (true_longitude_sun + deltaPsi + abberration) % 360; //Lambda / bujur matahari yang sudah ditambah beda nampak
-        if (apparent_longitude_sun < 0) apparent_longitude_sun += 360;
+        double apparent_longitude_sun = mod(true_longitude_sun + deltaPsi + abberration,360) ; //Lambda / bujur matahari yang sudah ditambah beda nampak
+
         double apparent_longitude_sun_r = Math.toRadians(apparent_longitude_sun);
         double semiDiameter_sun = (959.63 / 3600) / sunEarth_distance;
 
         double apparent_RightAscension_sun = (Math.toDegrees(Math.atan2(Math.sin(apparent_longitude_sun_r) * Math.cos(epsilon_r) - Math.tan(latitude_sun_r) * Math.sin(epsilon_r), Math.cos(apparent_longitude_sun_r)))) % 360;
-        if (apparent_RightAscension_sun < 0) apparent_RightAscension_sun = (apparent_RightAscension_sun + 360) % 360;
-
+        apparent_RightAscension_sun=mod(apparent_RightAscension_sun,360);
         double apparent_Declination_sun = Math.toDegrees(Math.asin(Math.sin(latitude_sun_r) * Math.cos(epsilon_r) + Math.cos(latitude_sun_r) * Math.sin(epsilon_r) * Math.sin(apparent_longitude_sun_r)));
         double apparent_Declination_sun_r = Math.toRadians(apparent_Declination_sun);
 
@@ -114,7 +110,7 @@ public class Calculation {
         y_num = Math.cos(apparent_Declination_sun_r) * Math.sin(Math.toRadians(apparent_RightAscension_sun - apparent_RightAscension_moon));
         x_num = Math.sin(apparent_Declination_sun_r) * Math.cos(Math.toRadians(apparent_Declination_moon)) - Math.cos(Math.toRadians(apparent_Declination_sun)) * Math.sin(Math.toRadians(apparent_Declination_moon)) * Math.cos(Math.toRadians(apparent_RightAscension_sun - apparent_RightAscension_moon));
         double chi = Math.toDegrees(Math.atan2(y_num, x_num));
-        if (chi < 0) chi += 360;
+         chi = mod(chi,360);
 
         double sudutFai = Math.acos(Math.sin(apparent_Declination_moon_rad) * Math.sin(apparent_Declination_sun_r) + Math.cos(apparent_Declination_moon_rad) * Math.cos(apparent_Declination_sun_r) * Math.cos(Math.toRadians(apparent_RightAscension_moon - apparent_RightAscension_sun)));
         double sudutFase = Math.atan2(jarakBm_Mat_AU * Math.sin(sudutFai), moonEarth_distance - jarakBm_Mat_AU * Math.cos(sudutFai));
@@ -163,8 +159,7 @@ public class Calculation {
         double L_sun = Vsop87.earthHeliocentricLongitude(tau); //hasil penumlahan koreksi l0+l1+l2 dst
         double theta = (L_sun + 180) % 360;
         double deltaTheta = -0.09033 / 3600;
-        double true_longitude_sun = (theta + deltaTheta) % 360; //theta terkoreksi //bujur matahari yang sudah terkoreksi
-        if (true_longitude_sun<0)true_longitude_sun+=360;
+        double true_longitude_sun = mod(theta + deltaTheta,360) ; //theta terkoreksi //bujur matahari yang sudah terkoreksi
         double sunEarth_distance = Vsop87.earthRadiusVector(tau);
         double sunEarth_distance_AU = 149598000 * sunEarth_distance; //AU
 
@@ -180,14 +175,12 @@ public class Calculation {
 
 
         double abberration = -20.4898 / (3600 * sunEarth_distance);
-        double apparent_longitude_sun = (true_longitude_sun + deltaPsi + abberration) % 360; //Lambda / bujur matahari yang sudah ditambah beda nampak
-        if (apparent_longitude_sun < 0) apparent_longitude_sun += 360;
+        double apparent_longitude_sun = mod(true_longitude_sun + deltaPsi + abberration,360); //Lambda / bujur matahari yang sudah ditambah beda nampak
         double apparent_longitude_sun_r = Math.toRadians(apparent_longitude_sun);
         double semiDiameter_sun = (959.63 / 3600) / sunEarth_distance;
 
         double apparent_RightAscension_sun = (Math.toDegrees(Math.atan2(Math.sin(apparent_longitude_sun_r) * Math.cos(epsilon_r) - Math.tan(latitude_sun_r) * Math.sin(epsilon_r), Math.cos(apparent_longitude_sun_r)))) % 360;
-        if (apparent_RightAscension_sun < 0) apparent_RightAscension_sun = (apparent_RightAscension_sun + 360) % 360;
-
+        apparent_RightAscension_sun=mod(apparent_RightAscension_sun,360);
         double apparent_Declination_sun = Math.toDegrees(Math.asin(Math.sin(latitude_sun_r) * Math.cos(epsilon_r) + Math.cos(latitude_sun_r) * Math.sin(epsilon_r) * Math.sin(apparent_longitude_sun_r)));
         double apparent_Declination_sun_r = Math.toRadians(apparent_Declination_sun);
 
@@ -228,9 +221,8 @@ public class Calculation {
         double deltaPsi = Nutation.nutationInLongitude(T);
 
         //Koreksi bujur bulan
-        double true_longitude_moon = (mean_longitude_moon + koreksibujurB) % 360;
-        double apparent_longitude_moon = (true_longitude_moon + deltaPsi) % 360;
-        if (apparent_longitude_moon < 0) apparent_longitude_moon += 360;
+        double true_longitude_moon = mod(mean_longitude_moon + koreksibujurB,360) ;
+        double apparent_longitude_moon = mod(true_longitude_moon + deltaPsi,360) ;
 
         double bujurB_nampak_r = Math.toRadians(apparent_longitude_moon);
 
@@ -246,8 +238,7 @@ public class Calculation {
         double semiDiameter_moon = 358473400 / (moonEarth_distance * 3600);
 
         double apparent_RightAscension_moon = (Math.toDegrees(Math.atan2(Math.sin(bujurB_nampak_r) * Math.cos(epsilon_r) - Math.tan(lintangB_r) * Math.sin(epsilon_r), Math.cos(bujurB_nampak_r)))) % 360;
-        if (apparent_RightAscension_moon < 0) apparent_RightAscension_moon = (apparent_RightAscension_moon + 360) % 360;
-
+        apparent_RightAscension_moon=mod(apparent_RightAscension_moon,360);
 
         double apparent_Declination_moon = Math.toDegrees(Math.asin(Math.sin(lintangB_r) * Math.cos(epsilon_r) + Math.cos(lintangB_r) * Math.sin(epsilon_r) * Math.sin(bujurB_nampak_r)));
         double deltaBulan_r = Math.toRadians(apparent_Declination_moon);
@@ -262,8 +253,7 @@ public class Calculation {
         y_num = Math.cos(deltaM_r) * Math.sin(Math.toRadians(alphaMatahari - apparent_RightAscension_moon));
         x_num = Math.sin(deltaM_r) * Math.cos(deltaBulan_r) - Math.cos(deltaM_r) * Math.sin(deltaBulan_r) * Math.cos(Math.toRadians(alphaMatahari - apparent_RightAscension_moon));
         double chi = Math.toDegrees(Math.atan2(y_num, x_num));
-        if (chi < 0) chi += 360;
-
+        chi=mod(chi,360);
         double sudutFai = Math.acos(Math.sin(deltaBulan_r) * Math.sin(deltaM_r) + Math.cos(deltaBulan_r) * Math.cos(deltaM_r) * Math.cos(Math.toRadians(apparent_RightAscension_moon - alphaMatahari)));
         double sudutFase = Math.atan2(jarakBm_M * Math.sin(sudutFai), moonEarth_distance - jarakBm_M * Math.cos(sudutFai));
         // double sudutFase_d=Math.toDegrees(sudutFase);
@@ -298,9 +288,8 @@ public class Calculation {
         double deltaPsi = Nutation.nutationInLongitude(T);
 
         //Koreksi bujur bulan
-        double true_longitude_moon = (mean_longitude_moon + koreksibujurB) % 360;
-        double apparent_longitude_moon = (true_longitude_moon + deltaPsi) % 360;
-        if (apparent_longitude_moon < 0) apparent_longitude_moon += 360;
+        double true_longitude_moon = mod(mean_longitude_moon + koreksibujurB,360)  ;
+        double apparent_longitude_moon = mod(true_longitude_moon + deltaPsi,360) ;
 
         double bujurB_nampak_r = Math.toRadians(apparent_longitude_moon);
 
@@ -316,8 +305,7 @@ public class Calculation {
         double semiDiameter_moon = 358473400 / (moonEarth_distance * 3600);
 
         double apparent_RightAscension_moon = (Math.toDegrees(Math.atan2(Math.sin(bujurB_nampak_r) * Math.cos(epsilon_r) - Math.tan(lintangB_r) * Math.sin(epsilon_r), Math.cos(bujurB_nampak_r)))) % 360;
-        if (apparent_RightAscension_moon < 0) apparent_RightAscension_moon = (apparent_RightAscension_moon + 360) % 360;
-
+        apparent_RightAscension_moon=mod(apparent_RightAscension_moon,360);
 
         double apparent_Declination_moon = Math.toDegrees(Math.asin(Math.sin(lintangB_r) * Math.cos(epsilon_r) + Math.cos(lintangB_r) * Math.sin(epsilon_r) * Math.sin(bujurB_nampak_r)));
         double deltaBulan_r = Math.toRadians(apparent_Declination_moon);
@@ -332,7 +320,7 @@ public class Calculation {
         y_num = Math.cos(deltaM_r) * Math.sin(Math.toRadians(alphaMatahari - apparent_RightAscension_moon));
         x_num = Math.sin(deltaM_r) * Math.cos(deltaBulan_r) - Math.cos(deltaM_r) * Math.sin(deltaBulan_r) * Math.cos(Math.toRadians(alphaMatahari - apparent_RightAscension_moon));
         double chi = Math.toDegrees(Math.atan2(y_num, x_num));
-        if (chi < 0) chi += 360;
+        chi=mod(chi,360);
 
         double sudutFai = Math.acos(Math.sin(deltaBulan_r) * Math.sin(deltaM_r) + Math.cos(deltaBulan_r) * Math.cos(deltaM_r) * Math.cos(Math.toRadians(apparent_RightAscension_moon - alphaMatahari)));
         double sudutFase = Math.atan2(jarakBm_M * Math.sin(sudutFai), moonEarth_distance - jarakBm_M * Math.cos(sudutFai));
@@ -368,9 +356,8 @@ public class Calculation {
         double deltaPsi = Nutation.nutationInLongitude(T);
 
         //Koreksi bujur bulan
-        double true_longitude_moon = (mean_longitude_moon + koreksibujurB) % 360;
-        double apparent_longitude_moon = (true_longitude_moon + deltaPsi) % 360;
-        if (apparent_longitude_moon < 0) apparent_longitude_moon += 360;
+        double true_longitude_moon =mod (mean_longitude_moon + koreksibujurB,360) ;
+        double apparent_longitude_moon = mod(true_longitude_moon + deltaPsi,360) ;
 
         double bujurB_nampak_r = Math.toRadians(apparent_longitude_moon);
 
@@ -387,8 +374,7 @@ public class Calculation {
         double semiDiameter_moon = 358473400 / (moonEarth_distance * 3600);
 
         double apparent_RightAscension_moon = (Math.toDegrees(Math.atan2(Math.sin(bujurB_nampak_r) * Math.cos(epsilon_r) - Math.tan(lintangB_r) * Math.sin(epsilon_r), Math.cos(bujurB_nampak_r)))) % 360;
-        if (apparent_RightAscension_moon < 0) apparent_RightAscension_moon = (apparent_RightAscension_moon + 360) % 360;
-
+        apparent_RightAscension_moon=mod(apparent_RightAscension_moon,360);
 
         double apparent_Declination_moon = Math.toDegrees(Math.asin(Math.sin(lintangB_r) * Math.cos(epsilon_r) + Math.cos(lintangB_r) * Math.sin(epsilon_r) * Math.sin(bujurB_nampak_r)));
         double deltaBulan_r = Math.toRadians(apparent_Declination_moon);
@@ -403,7 +389,7 @@ public class Calculation {
         y_num = Math.cos(deltaM_r) * Math.sin(Math.toRadians(alphaMatahari - apparent_RightAscension_moon));
         x_num = Math.sin(deltaM_r) * Math.cos(deltaBulan_r) - Math.cos(deltaM_r) * Math.sin(deltaBulan_r) * Math.cos(Math.toRadians(alphaMatahari - apparent_RightAscension_moon));
         double chi = Math.toDegrees(Math.atan2(y_num, x_num));
-        if (chi < 0) chi += 360;
+        chi=mod(chi,360);
 
         double sudutFai = Math.acos(Math.sin(deltaBulan_r) * Math.sin(deltaM_r) + Math.cos(deltaBulan_r) * Math.cos(deltaM_r) * Math.cos(Math.toRadians(apparent_RightAscension_moon - alphaMatahari)));
         double sudutFase = Math.atan2(jarakBm_M * Math.sin(sudutFai), moonEarth_distance - jarakBm_M * Math.cos(sudutFai));

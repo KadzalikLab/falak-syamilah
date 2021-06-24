@@ -2,6 +2,7 @@ package com.falak;
 
 import java.util.Random;
 
+
 //library matematika falak yang sebagian tidak ada di library default Java.lang
 public class Mathf {
 
@@ -17,8 +18,15 @@ public class Mathf {
         return (year % 400 == 0) || ((year % 4 == 0) && (year % 100 != 0));
     }
 
-    public static double modulo(double x, double y) {
+    public static double moduloModif(double x, double y) {
         return x - (int) (x / y) * x;
+    }
+
+    /**
+     * fungsi Mod yang mirip dengan fungsi di-Excel / Libre office
+     */
+    public static double mod(double a, double b){
+        return (a%b+b)%b;
     }
 
     public static double abs360(double val) {
@@ -26,8 +34,8 @@ public class Mathf {
         return val;
     }
 
-    public static double rad(double deg_value) {
-        return Math.toRadians(deg_value);
+    public static double rad(double deg_v) {
+        return Math.toRadians(deg_v);
 
     }
 
@@ -41,6 +49,22 @@ public class Mathf {
 
         return (int)(Math.random()*1);
 
+    }
+
+    public  static  double random_jd(int tahun_min, int tahun_max){
+        int tanggal = random(1,31);
+        int bulan = random(1,12);
+        int tahun = random(tahun_min,tahun_max);
+
+        int jam = random(0,24);
+//        int menit = random(0,60);
+//        double detik = random(0,60);
+         int menit = 0;
+        double detik = 0;
+
+        double jamDes = Konversi.dmsKeDesimal(jam,menit,detik);
+
+        return Konversi.masehiKeJd(tanggal,bulan,tahun,jamDes);
     }
 
 
